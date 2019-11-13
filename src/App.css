@@ -1,22 +1,80 @@
-.App {
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#root {
+  width: 100vw;
+}
+
+.background {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100wv;
+  background-size: cover;
+  background-color: #0e0e0e;
+}
+
+.Card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 3rem;
+  background-color: #0e0e0e;
+  opacity: 0.8;
+  color: #f2f2f2;
+  border-radius: 1rem;
+}
+
+.Hiragana {
+  font-size: 10rem;
+}
+
+.input {
+  outline: none;
+  border: none;
+  border-bottom: 2px solid white;
+  background-color: transparent;
+  color: white;
+  font-size: 2rem;
+  font-family: sans-serif;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.Score {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #0e0e0e;
+  color: #f2f2f2;
+  padding: 1rem;
+  border-radius: 1rem;
 }
 
-.App-link {
-  color: #09d3ac;
+.Percentage {
+  margin: 0;
+  padding: 0;
+}
+
+@media only screen and (max-width : 480px) {
+  .Card {
+    padding: 1rem;
+  }
+  .Hiragana {
+    font-size: 8rem;
+  }
+  .input {
+    font-size: 1.6rem;
+  }
 }

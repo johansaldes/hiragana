@@ -1,25 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
+import Card from './components/Card';
 import './App.css';
+import Background from './components/Background';
+import Score from './components/Score';
+
+const initialState = {
+  correct: 0,
+  tries: 0
+}
+
+export const ScoreContext = React.createContext();
+
+const scoreReducer = (state, action) => {
+  switch(action.type) {
+    case 'INCREMENT_SCORE':
+      return { ...state, correct: state.correct + 1 };
+    case 'INCREMENT_TRIES':
+      return { ...state, tries: state.tries + 1 }
+    default:
+      return state;
+  }
+}
 
 function App() {
+  const [state, dispatch] = React.useReducer(scoreReducer, initialState);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Background>
+      <ScoreContext.Provider value={state}>
+        <Score />
+        <Card
+          updateScore={() => dispatch({ type: 'INCREMENT_SCORE' })}
+          updateTries={() => dispatch({ type: 'INCREMENT_TRIES' })}
+        />
+      </ScoreContext.Provider>
+    </Background>
   );
 }
 

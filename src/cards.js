@@ -1,0 +1,344 @@
+const cards = [{
+  hiragana: 'あ',
+  romanji: ['a']
+}, {
+  hiragana: 'い',
+  romanji: ['i']
+}, {
+  hiragana: 'う',
+  romanji: ['u']
+}, {
+  hiragana: 'え',
+  romanji: ['e']
+}, {
+  hiragana: 'お',
+  romanji: ['o']
+}, {
+  hiragana: 'か',
+  romanji: ['ka']
+}, {
+  hiragana: 'き',
+  romanji: ['ki']
+}, {
+  hiragana: 'く',
+  romanji: ['ku']
+}, {
+  hiragana: 'け',
+  romanji: ['ke']
+}, {
+  hiragana: 'こ',
+  romanji: ['ko']
+}, {
+  hiragana: 'きゃ',
+  romanji: ['kya']
+}, {
+  hiragana: 'きゅ',
+  romanji: ['kyu']
+}, {
+  hiragana: 'きょ',
+  romanji: ['kyo']
+}, {
+  hiragana: 'さ',
+  romanji: ['sa']
+}, {
+  hiragana: 'し',
+  romanji: ['shi']
+}, {
+  hiragana: 'す',
+  romanji: ['su']
+}, {
+  hiragana: 'せ',
+  romanji: ['se']
+}, {
+  hiragana: 'そ',
+  romanji: ['so']
+}, {
+  hiragana: 'しゃ',
+  romanji: ['sha']
+}, {
+  hiragana: 'しゅ',
+  romanji: ['shu']
+}, {
+  hiragana: 'しょ',
+  romanji: ['sho']
+}, {
+  hiragana: 'た',
+  romanji: ['ta']
+}, {
+  hiragana: 'ち',
+  romanji: ['chi']
+}, {
+  hiragana: 'つ',
+  romanji: ['tsu']
+}, {
+  hiragana: 'て',
+  romanji: ['te']
+}, {
+  hiragana: 'と',
+  romanji: ['to']
+}, {
+  hiragana: 'ちゃ',
+  romanji: ['cha']
+}, {
+  hiragana: 'ちゅ',
+  romanji: ['chu']
+}, {
+  hiragana: 'ちょ',
+  romanji: ['cho']
+}, {
+  hiragana: 'な',
+  romanji: ['na']
+}, {
+  hiragana: 'に',
+  romanji: ['ni']
+}, {
+  hiragana: 'ぬ',
+  romanji: ['nu']
+}, {
+  hiragana: 'ね',
+  romanji: ['ne']
+}, {
+  hiragana: 'の',
+  romanji: ['no']
+}, {
+  hiragana: 'にゃ',
+  romanji: ['nya']
+}, {
+  hiragana: 'にゅ',
+  romanji: ['nyu']
+}, {
+  hiragana: 'にょ',
+  romanji: ['nyo']
+}, {
+  hiragana: 'は',
+  romanji: ['ha']
+}, {
+  hiragana: 'ひ',
+  romanji: ['hi']
+}, {
+  hiragana: 'ふ',
+  romanji: ['fu']
+}, {
+  hiragana: 'へ',
+  romanji: ['he']
+}, {
+  hiragana: 'ほ',
+  romanji: ['ho']
+}, {
+  hiragana: 'ひゃ',
+  romanji: ['hya']
+}, {
+  hiragana: 'ひゅ',
+  romanji: ['hyu']
+}, {
+  hiragana: 'ひょ',
+  romanji: ['hyo']
+}, {
+  hiragana: 'ま',
+  romanji: ['ma']
+}, {
+  hiragana: 'み',
+  romanji: ['mi']
+}, {
+  hiragana: 'む',
+  romanji: ['mu']
+}, {
+  hiragana: 'め',
+  romanji: ['me']
+}, {
+  hiragana: 'も',
+  romanji: ['mo']
+}, {
+  hiragana: 'みゃ',
+  romanji: ['mya']
+}, {
+  hiragana: 'みゅ',
+  romanji: ['myu']
+}, {
+  hiragana: 'みょ',
+  romanji: ['myo']
+}, {
+  hiragana: 'や',
+  romanji: ['ya']
+}, {
+  hiragana: 'ゆ',
+  romanji: ['yu']
+}, {
+  hiragana: 'よ',
+  romanji: ['yo']
+}, {
+  hiragana: 'ら',
+  romanji: ['ra']
+}, {
+  hiragana: 'り',
+  romanji: ['ri']
+}, {
+  hiragana: 'る',
+  romanji: ['ru']
+}, {
+  hiragana: 'れ',
+  romanji: ['re']
+}, {
+  hiragana: 'ろ',
+  romanji: ['ro']
+}, {
+  hiragana: 'りゃ',
+  romanji: ['rya']
+}, {
+  hiragana: 'りゅ',
+  romanji: ['ryu']
+}, {
+  hiragana: 'りょ',
+  romanji: ['ryo']
+}, {
+  hiragana: 'わ',
+  romanji: ['wa']
+}, {
+  hiragana: 'ゐ',
+  romanji: ['wi']
+}, {
+  hiragana: 'ゑ',
+  romanji: ['we']
+}, {
+  hiragana: 'を',
+  romanji: ['wo']
+}, {
+  hiragana: 'ん',
+  romanji: ['n']
+}, {
+  hiragana: 'が',
+  romanji: ['ga']
+}, {
+  hiragana: 'ぎ',
+  romanji: ['gi']
+}, {
+  hiragana: 'ぐ',
+  romanji: ['gu']
+}, {
+  hiragana: 'げ',
+  romanji: ['ge']
+}, {
+  hiragana: 'ご',
+  romanji: ['go']
+}, {
+  hiragana: 'ぎゃ',
+  romanji: ['gya']
+}, {
+  hiragana: 'ぎゅ',
+  romanji: ['gyu']
+}, {
+  hiragana: 'ぎょ',
+  romanji: ['gyo']
+}, {
+  hiragana: 'ざ',
+  romanji: ['za']
+}, {
+  hiragana: 'じ',
+  romanji: ['ji']
+}, {
+  hiragana: 'ず',
+  romanji: ['zu']
+}, {
+  hiragana: 'ぜ',
+  romanji: ['ze']
+}, {
+  hiragana: 'ぞ',
+  romanji: ['zo']
+}, {
+  hiragana: 'じゃ',
+  romanji: ['ja']
+}, {
+  hiragana: 'じゅ',
+  romanji: ['ju']
+}, {
+  hiragana: 'じょ',
+  romanji: ['jo']
+}, {
+  hiragana: 'だ',
+  romanji: ['da']
+}, {
+  hiragana: 'ぢ',
+  romanji: ['ji', 'dji', 'jyi']
+}, {
+  hiragana: 'づ',
+  romanji: ['dzu', 'zu']
+}, {
+  hiragana: 'で',
+  romanji: ['de']
+}, {
+  hiragana: 'ど',
+  romanji: ['do']
+}, {
+  hiragana: 'ぢゃ',
+  romanji: ['ja']
+}, {
+  hiragana: 'ぢゅ',
+  romanji: ['ju']
+}, {
+  hiragana: 'ぢょ',
+  romanji: ['jo']
+}, {
+  hiragana: 'ば',
+  romanji: ['ba']
+}, {
+  hiragana: 'び',
+  romanji: ['bi']
+}, {
+  hiragana: 'ぶ',
+  romanji: ['bu']
+}, {
+  hiragana: 'べ',
+  romanji: ['be']
+}, {
+  hiragana: 'ぼ',
+  romanji: ['bo']
+}, {
+  hiragana: 'びゃ',
+  romanji: ['bya']
+}, {
+  hiragana: 'びゅ',
+  romanji: ['byu']
+}, {
+  hiragana: 'びょ',
+  romanji: ['byo']
+}, {
+  hiragana: 'ぱ',
+  romanji: ['pa']
+}, {
+  hiragana: 'ぴ',
+  romanji: ['pi']
+}, {
+  hiragana: 'ぷ',
+  romanji: ['pu']
+}, {
+  hiragana: 'ぺ',
+  romanji: ['pe']
+}, {
+  hiragana: 'ぽ',
+  romanji: ['po']
+}, {
+  hiragana: 'ぴゃ',
+  romanji: ['pya']
+}, {
+  hiragana: 'ぴゅ',
+  romanji: ['pyu']
+}, {
+  hiragana: 'ぴょ',
+  romanji: ['pyo']
+}];
+
+const getRandomCard = () => cards[Math.floor(Math.random() * cards.length)];
+
+const getRomanji = card => card.romanji;
+
+const getHiragana = card => card.hiragana;
+
+const checkInputCorrect = (input, card) => card.romanji.includes(input);
+
+export {
+  cards,
+  getRandomCard,
+  getRomanji,
+  getHiragana,
+  checkInputCorrect
+}
