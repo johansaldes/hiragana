@@ -5,7 +5,7 @@ function Card({ updateScore, updateTries }) {
   /**
    * @desc Decides if card shows hiragana or romanji
    */
-  let [view, setView] = useState(true);
+  let [view, setView] = useState('katakana');
 
   /**
    * @desc Decides what flashcard to show
@@ -13,15 +13,26 @@ function Card({ updateScore, updateTries }) {
   let [card, setCard] = useState(getRandomCard());
 
   let [inputValue, setInputValue] = useState('');
-  const hiraganaOrRomanji = (type) => type ? card.hiragana : card.romanji[0];
+  const selectWritingSystem = (type) => {
+    switch(type) {
+      case 'hiragana':
+        return card.hiragana;
+      case 'katakana':
+        return card.katakana;
+      case 'romanji':
+        return card.romanji[0];
+      default:
+        console.log('Invalid writing system.')
+    }
+  }
   return (
     <div className="Card">
       <h1
-        onMouseEnter={() => setView(!view)}
-        onMouseLeave={() => setView(!view)}
+        onMouseEnter={() => setView('romanji')}
+        onMouseLeave={() => setView('katakana')}
         className="Hiragana"
       >
-        {hiraganaOrRomanji(view)}
+        {selectWritingSystem(view)}
       </h1>
       <input 
         value={inputValue} 

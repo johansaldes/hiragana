@@ -7,7 +7,7 @@ import Score from './components/Score';
 const initialState = {
   correct: 0,
   tries: 0
-}
+};
 
 export const ScoreContext = React.createContext();
 
