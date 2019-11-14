@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { getRandomCard, checkInputCorrect } from '../cards';
+import { ScoreContext } from '../App';
 
-function Card({ updateScore, updateTries }) {
+function Card() {
   /**
    * @desc Decides if card shows hiragana or romanji
    */
@@ -26,35 +27,41 @@ function Card({ updateScore, updateTries }) {
     }
   }
   return (
-    <div className="Card">
-      <h1
-        onMouseEnter={() => setView('romanji')}
-        onMouseLeave={() => setView('katakana')}
-        className="Hiragana"
-      >
-        {selectWritingSystem(view)}
-      </h1>
-      <input 
-        value={inputValue} 
-        className="input" 
-        type="text"
-        autoFocus
-        onChange={e => setInputValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            if (inputValue.length === 0) {
-              return;
-            }
-            if (checkInputCorrect(inputValue.toLowerCase(), card)) {
-              card = setCard(getRandomCard());
-              updateScore();
-            }
-            updateTries();
-            setInputValue('');
-          }
-        }} 
-      />
-    </div>
+    <ScoreContext.Consumer>
+      {({ dispatch }) => {
+        return (
+          <div className="Card">
+          <h1
+            onMouseEnter={() => setView('romanji')}
+            onMouseLeave={() => setView('katakana')}
+            className="Hiragana"
+          >
+            {selectWritingSystem(view)}
+          </h1>
+          <input 
+            value={inputValue} 
+            className="input" 
+            type="text"
+            autoFocus
+            onChange={e => setInputValue(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                if (inputValue.length === 0) {
+                  return;
+                }
+                if (checkInputCorrect(inputValue.toLowerCase(), card)) {
+                  card = setCard(getRandomCard());
+                  dispatch({ type: 'INCREMENT_SCORE' })
+                }
+                dispatch({ type: 'INCREMENT_TRIES' })
+                setInputValue('');
+              }
+            }} 
+          />
+        </div>
+        )
+      }}
+    </ScoreContext.Consumer>
   );
 }
 

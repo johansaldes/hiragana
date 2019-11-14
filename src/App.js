@@ -26,12 +26,9 @@ function App() {
   const [state, dispatch] = React.useReducer(scoreReducer, initialState);
   return (
     <Background>
-      <ScoreContext.Provider value={state}>
+      <ScoreContext.Provider value={{ state, dispatch }}>
         <Score />
-        <Card
-          updateScore={() => dispatch({ type: 'INCREMENT_SCORE' })}
-          updateTries={() => dispatch({ type: 'INCREMENT_TRIES' })}
-        />
+        <Card />
       </ScoreContext.Provider>
     </Background>
   );
