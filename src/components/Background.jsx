@@ -5,13 +5,14 @@ import bg3 from '../images/bg3.jpg';
 import bg4 from '../images/bg4.jpg';
 import bg5 from '../images/bg5.jpg';
 import bg6 from '../images/bg6.jpg';
+import { ScoreContext } from '../App';
+
+export const backgroundImages = [bg, bg2, bg3, bg4, bg5, bg6];
 
 function Background({children}) {
-  const backgroundImages = [bg, bg2, bg3, bg4, bg5, bg6];
-  const getBackgroundImage = () => backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-
+  const [{ background }] = React.useContext(ScoreContext);
   return (
-    <div className="background" style={{ backgroundImage: `url(${getBackgroundImage()})` }}>
+    <div className="background" style={{ backgroundImage: `url(${background})` }}>
       {children}
     </div>
   );
