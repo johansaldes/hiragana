@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ScoreContext } from '../App';
+import { ScoreContext } from '../context/ScoreContext';
 
 function Score() {
   const [{ correct, tries }] = useContext(ScoreContext);
@@ -7,10 +7,11 @@ function Score() {
   return (
     <div className="Score">
       <h2 className="Percentage">
-        {(total * 100).toFixed(0) || 0}%
+        {(total * 100).toFixed(0) || 0}
+        %
       </h2>
     </div>
-  )
+  );
 }
 
 export default Score;
