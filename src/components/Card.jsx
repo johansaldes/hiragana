@@ -14,6 +14,8 @@ function Card() {
    */
   const [card, setCard] = useState(getRandomCard());
 
+  const [correct, setCorrect] = useState('');
+
   const [inputValue, setInputValue] = useState('');
 
   const selectWritingSystem = (type) => {
@@ -29,8 +31,15 @@ function Card() {
     }
   };
 
+  const setBorderColor = (state) => {
+    setCorrect(state);
+    setTimeout(() => {
+      setCorrect('');
+    }, 1500);
+  };
+
   return (
-    <div className="Card">
+    <div className={`Card ${correct}`}>
       <h1
         onMouseEnter={() => setView('romanji')}
         onMouseLeave={() => setView(writingsystem)}
@@ -49,9 +58,12 @@ function Card() {
               return;
             }
             if (checkInputCorrect(inputValue.toLowerCase(), card)) {
+              setBorderColor('correctAnswer');
               setCard(getRandomCard());
               dispatch({ type: 'INCREMENT_SCORE' });
               dispatch({ type: 'UPDATE_BACKGROUND' });
+            } else {
+              setBorderColor('incorrectAnswer');
             }
             dispatch({ type: 'INCREMENT_TRIES' });
             setInputValue('');
