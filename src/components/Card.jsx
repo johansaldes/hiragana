@@ -51,6 +51,7 @@ function Card() {
             if (checkInputCorrect(inputValue.toLowerCase(), card)) {
               card = setCard(getRandomCard());
               dispatch({ type: 'INCREMENT_SCORE' })
+              dispatch({ type: 'UPDATE_BACKGROUND' })
             }
             dispatch({ type: 'INCREMENT_TRIES' })
             setInputValue('');
