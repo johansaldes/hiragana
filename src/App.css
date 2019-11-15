@@ -62,6 +62,24 @@ html, body {
   border-radius: 1rem;
 }
 
+.SelectWritingSystemBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #0e0e0e;
+  color: #f2f2f2;
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.SelectWritingSystemBtn h2 {
+  margin: 0;
+  padding: 0;
+}
+
 .Percentage {
   margin: 0;
   padding: 0;

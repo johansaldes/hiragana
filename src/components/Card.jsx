@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { getRandomCard, checkInputCorrect } from '../cards';
+import { ScoreContext } from '../App';
 
-function Card({ updateScore, updateTries }) {
+function Card() {
+  const [{ writingsystem }, dispatch] = useContext(ScoreContext);
   /**
    * @desc Decides if card shows hiragana or romanji
    */
-  let [view, setView] = useState(true);
+  let [view, setView] = useState(writingsystem);
 
   /**
    * @desc Decides what flashcard to show
@@ -13,15 +15,27 @@ function Card({ updateScore, updateTries }) {
   let [card, setCard] = useState(getRandomCard());
 
   let [inputValue, setInputValue] = useState('');
-  const hiraganaOrRomanji = (type) => type ? card.hiragana : card.romanji[0];
+
+  const selectWritingSystem = (type) => {
+    switch(type) {
+      case 'hiragana':
+        return card.hiragana;
+      case 'katakana':
+        return card.katakana;
+      case 'romanji':
+        return card.romanji[0];
+      default:
+        console.log('Invalid writing system.')
+    }
+  }
   return (
     <div className="Card">
       <h1
-        onMouseEnter={() => setView(!view)}
-        onMouseLeave={() => setView(!view)}
+        onMouseEnter={() => setView('romanji')}
+        onMouseLeave={() => setView(writingsystem)}
         className="Hiragana"
       >
-        {hiraganaOrRomanji(view)}
+        {selectWritingSystem(view === 'romanji' ? view : writingsystem)}
       </h1>
       <input 
         value={inputValue} 
@@ -36,9 +50,9 @@ function Card({ updateScore, updateTries }) {
             }
             if (checkInputCorrect(inputValue.toLowerCase(), card)) {
               card = setCard(getRandomCard());
-              updateScore();
+              dispatch({ type: 'INCREMENT_SCORE' })
             }
-            updateTries();
+            dispatch({ type: 'INCREMENT_TRIES' })
             setInputValue('');
           }
         }} 

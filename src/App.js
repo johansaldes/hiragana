@@ -3,11 +3,13 @@ import Card from './components/Card';
 import './App.css';
 import Background from './components/Background';
 import Score from './components/Score';
+import SelectWritingSystem from './components/SelectWritingSystem';
 
 const initialState = {
   correct: 0,
-  tries: 0
-}
+  tries: 0,
+  writingsystem: 'hiragana'
+};
 
 export const ScoreContext = React.createContext();
 
@@ -17,21 +19,20 @@ const scoreReducer = (state, action) => {
       return { ...state, correct: state.correct + 1 };
     case 'INCREMENT_TRIES':
       return { ...state, tries: state.tries + 1 }
+    case 'SET_WRITING_SYSTEM':
+      return { ...state, writingsystem: action.writingsystem }
     default:
       return state;
   }
 }
 
 function App() {
-  const [state, dispatch] = React.useReducer(scoreReducer, initialState);
   return (
     <Background>
-      <ScoreContext.Provider value={state}>
+      <ScoreContext.Provider value={React.useReducer(scoreReducer, initialState)}>
         <Score />
-        <Card
-          updateScore={() => dispatch({ type: 'INCREMENT_SCORE' })}
-          updateTries={() => dispatch({ type: 'INCREMENT_TRIES' })}
-        />
+        <SelectWritingSystem />
+        <Card />
       </ScoreContext.Provider>
     </Background>
   );
