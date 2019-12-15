@@ -5,16 +5,18 @@ import Background from './components/Background';
 import Score from './components/Score';
 import SelectWritingSystem from './components/SelectWritingSystem';
 import { scoreReducer, initialState, ScoreContext } from './context/ScoreContext';
+import StartMenu from './pages/StartMenu';
 
 
 function App() {
   return (
     <ScoreContext.Provider value={React.useReducer(scoreReducer, initialState)}>
-      <Background>
-        <Score />
-        <SelectWritingSystem />
-        <Card />
-      </Background>
+      <StartMenu>
+        <Background>
+          <Score />
+          <Card />
+        </Background>
+      </StartMenu>
     </ScoreContext.Provider>
   );
 }

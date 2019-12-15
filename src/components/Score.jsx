@@ -8,7 +8,9 @@ function Score() {
     <div className="Score">
       <h2 className="Percentage">
         {(total * 100).toFixed(0) || 0}
-        %
+        % /
+        {' '}
+        {tries}
       </h2>
     </div>
   );
