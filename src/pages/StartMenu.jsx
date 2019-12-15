@@ -22,6 +22,7 @@ const Item = styled.li`
 `;
 
 export default function StartMenu({ children }) {
+  // eslint-disable-next-line no-unused-vars
   const [_, dispatch] = React.useContext(ScoreContext);
   const [confirmed, setConfirmed] = React.useState(false);
 
