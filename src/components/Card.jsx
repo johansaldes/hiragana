@@ -1,13 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback, useMemo } from 'react';
 import { getRandomCard, checkInputCorrect } from '../cards';
 import { ScoreContext } from '../context/ScoreContext';
 
 function Card() {
   const [{ writingsystem }, dispatch] = useContext(ScoreContext);
-  /**
-   * @desc Decides if card shows hiragana or romanji
-   */
-  const [view, setView] = useState(writingsystem);
 
   /**
    * @desc Decides what flashcard to show
@@ -15,8 +11,6 @@ function Card() {
   const [card, setCard] = useState(getRandomCard());
 
   const [correct, setCorrect] = useState('');
-
-  const [inputValue, setInputValue] = useState('');
 
   const selectWritingSystem = (type) => {
     switch (type) {
@@ -38,38 +32,47 @@ function Card() {
     }, 1500);
   };
 
+  const generateAnswers = useCallback(() => [
+    getRandomCard().romanji[0],
+    getRandomCard().romanji[0],
+    card.romanji[0],
+  ].sort(() => Math.random() - 0.5), [card]);
+
+  const sumbitAnswer = useCallback(
+    (answer) => {
+      if (checkInputCorrect(answer, card)) {
+        setCard(getRandomCard());
+        setBorderColor('correctAnswer');
+        dispatch({ type: 'INCREMENT_SCORE' });
+        dispatch({ type: 'UPDATE_BACKGROUND' });
+      } else {
+        setBorderColor('incorrectAnswer');
+      }
+      dispatch({ type: 'INCREMENT_TRIES' });
+    },
+    [setBorderColor, setCard, dispatch, card],
+  );
+
+  const SelectAnswer = useMemo(() => {
+    return generateAnswers().map((answer) => (
+      <button
+        className="AnswerBtn"
+        type="button"
+        onClick={() => sumbitAnswer(answer)}
+      >
+        {answer}
+      </button>
+    ));
+  }, [card]);
+
   return (
     <div className={`Card ${correct}`}>
-      <h1
-        onMouseEnter={() => setView('romanji')}
-        onMouseLeave={() => setView(writingsystem)}
-        className="Hiragana"
-      >
-        {selectWritingSystem(view === 'romanji' ? view : writingsystem)}
+      <h1 className="Hiragana">
+        {selectWritingSystem(writingsystem)}
       </h1>
-      <input
-        value={inputValue}
-        className="input"
-        type="text"
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            if (inputValue.length === 0) {
-              return;
-            }
-            if (checkInputCorrect(inputValue.toLowerCase(), card)) {
-              setBorderColor('correctAnswer');
-              setCard(getRandomCard());
-              dispatch({ type: 'INCREMENT_SCORE' });
-              dispatch({ type: 'UPDATE_BACKGROUND' });
-            } else {
-              setBorderColor('incorrectAnswer');
-            }
-            dispatch({ type: 'INCREMENT_TRIES' });
-            setInputValue('');
-          }
-        }}
-      />
+      <div className="Answer">
+        {SelectAnswer}
+      </div>
     </div>
   );
 }
