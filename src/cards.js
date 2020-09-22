@@ -436,7 +436,20 @@ const cards = [{
   romanji: ['pyo'],
 }];
 
-const getRandomCard = () => cards[Math.floor(Math.random() * cards.length)];
+const getRandomCard = (answer = '') => {
+  let properLength = true;
+  let result = cards[Math.floor(Math.random() * cards.length)];
+  if (!answer) {
+    return result;
+  }
+  while (answer === result.romanji[0] || properLength) {
+    result = cards[Math.floor(Math.random() * cards.length)];
+    if (result.romanji[0].length === answer.length) {
+      properLength = false;
+    }
+  }
+  return result;
+};
 
 const getRomanji = (card) => card.romanji;
 

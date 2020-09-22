@@ -32,11 +32,16 @@ function Card() {
     }, 1500);
   };
 
-  const generateAnswers = useCallback(() => [
-    getRandomCard().romanji[0],
-    getRandomCard().romanji[0],
-    card.romanji[0],
-  ].sort(() => Math.random() - 0.5), [card]);
+  const generateAnswers = useCallback(() => {
+    if (card) {
+      return [
+        getRandomCard(card.romanji[0]).romanji[0],
+        getRandomCard(card.romanji[0]).romanji[0],
+        card.romanji[0],
+      ].sort(() => Math.random() - 0.5);
+    }
+    return [];
+  }, [card]);
 
   const sumbitAnswer = useCallback(
     (answer) => {
@@ -54,15 +59,18 @@ function Card() {
   );
 
   const SelectAnswer = useMemo(() => {
-    return generateAnswers().map((answer) => (
-      <button
-        className="AnswerBtn"
-        type="button"
-        onClick={() => sumbitAnswer(answer)}
-      >
-        {answer}
-      </button>
-    ));
+    if (card) {
+      return generateAnswers().map((answer) => (
+        <button
+          className="AnswerBtn"
+          type="button"
+          onClick={() => sumbitAnswer(answer)}
+        >
+          {answer}
+        </button>
+      ));
+    }
+    return <div />
   }, [card]);
 
   return (
