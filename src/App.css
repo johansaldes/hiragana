@@ -131,7 +131,7 @@ html, body {
 @media only screen and (max-width : 480px) {
   .Card {
     padding: 1rem;
-    width: 100%;
+    width: calc(100% - 2rem);
   }
   .Hiragana {
     font-size: 8rem;
