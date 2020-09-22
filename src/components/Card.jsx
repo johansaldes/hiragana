@@ -25,12 +25,12 @@ function Card() {
     }
   };
 
-  const setBorderColor = (state) => {
+  const setBorderColor = useCallback((state) => {
     setCorrect(state);
     setTimeout(() => {
       setCorrect('');
     }, 1500);
-  };
+  }, []);
 
   const generateAnswers = useCallback(() => {
     if (card) {
@@ -71,7 +71,7 @@ function Card() {
       ));
     }
     return <div />
-  }, [card]);
+  }, [card, generateAnswers, sumbitAnswer]);
 
   return (
     <div className={`Card ${correct}`}>
