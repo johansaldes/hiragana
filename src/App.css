@@ -51,6 +51,7 @@ html, body {
   color: #0e0e0e;
   border-radius: 1rem;
   border: 10px solid #0e0e0e;
+  width: 500px;
 }
 
 .correctAnswer {
@@ -110,6 +111,19 @@ html, body {
 .Percentage {
   margin: 0;
   padding: 0;
+}
+
+.Answer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.AnswerBtn {
+  font-size: 2rem;
+  padding: 1rem;
+  width: 6rem;
 }
 
 @media only screen and (max-width : 480px) {

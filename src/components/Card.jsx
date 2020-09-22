@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { getRandomCard, checkInputCorrect } from '../cards';
 import { ScoreContext } from '../context/ScoreContext';
 
@@ -7,7 +7,7 @@ function Card() {
   /**
    * @desc Decides if card shows hiragana or romanji
    */
-  const [view, setView] = useState(writingsystem);
+  const [view, setWritingSystem] = useState(writingsystem);
 
   /**
    * @desc Decides what flashcard to show
@@ -38,38 +38,48 @@ function Card() {
     }, 1500);
   };
 
+  const generateAnswers = () => [
+    getRandomCard().romanji[0],
+    getRandomCard().romanji[0],
+    card.romanji[0],
+  ].sort(() => Math.random() - 0.5);
+
+  const sumbitAnswer = useCallback(
+    (answer) => {
+      if (checkInputCorrect(answer, card)) {
+        setBorderColor('correctAnswer');
+        setCard(getRandomCard());
+        dispatch({ type: 'INCREMENT_SCORE' });
+        dispatch({ type: 'UPDATE_BACKGROUND' });
+      } else {
+        setBorderColor('incorrectAnswer');
+      }
+      dispatch({ type: 'INCREMENT_TRIES' });
+      setInputValue('');
+    },
+    [setBorderColor, setCard, dispatch, setInputValue, card, inputValue],
+  );
+
   return (
     <div className={`Card ${correct}`}>
       <h1
-        onMouseEnter={() => setView('romanji')}
-        onMouseLeave={() => setView(writingsystem)}
+        onMouseEnter={() => setWritingSystem('romanji')}
+        onMouseLeave={() => setWritingSystem(writingsystem)}
         className="Hiragana"
       >
         {selectWritingSystem(view === 'romanji' ? view : writingsystem)}
       </h1>
-      <input
-        value={inputValue}
-        className="input"
-        type="text"
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            if (inputValue.length === 0) {
-              return;
-            }
-            if (checkInputCorrect(inputValue.toLowerCase(), card)) {
-              setBorderColor('correctAnswer');
-              setCard(getRandomCard());
-              dispatch({ type: 'INCREMENT_SCORE' });
-              dispatch({ type: 'UPDATE_BACKGROUND' });
-            } else {
-              setBorderColor('incorrectAnswer');
-            }
-            dispatch({ type: 'INCREMENT_TRIES' });
-            setInputValue('');
-          }
-        }}
-      />
+      <div className="Answer">
+        {generateAnswers().map((answer) => (
+          <button
+            className="AnswerBtn"
+            type="button"
+            onClick={() => sumbitAnswer(answer)}
+          >
+            {answer}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
