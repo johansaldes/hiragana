@@ -1,6 +1,7 @@
-import React, { useState, useContext, useCallback, useMemo } from 'react';
-import { getRandomCard, checkInputCorrect } from '../cards';
-import { ScoreContext } from '../context/ScoreContext';
+import React, { useState, useContext, useCallback, useMemo } from "react";
+import { getRandomCard, checkInputCorrect } from "../cards";
+import { ScoreContext } from "../context/ScoreContext";
+import { AnswerButton, CardContainer, cardVariants } from "./styled";
 
 function Card() {
   const [{ writingsystem }, dispatch] = useContext(ScoreContext);
@@ -10,27 +11,27 @@ function Card() {
    */
   const [card, setCard] = useState(getRandomCard());
 
-  const [correct, setCorrect] = useState('');
+  const [correct, setCorrect] = useState(null);
+
+  const setCorrectAnswer = (state) => {
+    setCorrect(state);
+    setTimeout(() => {
+      setCorrect(null);
+    }, 400)
+  }
 
   const selectWritingSystem = (type) => {
     switch (type) {
-      case 'hiragana':
+      case "hiragana":
         return card.hiragana;
-      case 'katakana':
+      case "katakana":
         return card.katakana;
-      case 'romanji':
+      case "romanji":
         return card.romanji[0];
       default:
-        throw new Error('Invalid writing system.');
+        throw new Error("Invalid writing system.");
     }
   };
-
-  const setBorderColor = useCallback((state) => {
-    setCorrect(state);
-    setTimeout(() => {
-      setCorrect('');
-    }, 1500);
-  }, []);
 
   const generateAnswers = useCallback(() => {
     if (card) {
@@ -47,41 +48,43 @@ function Card() {
     (answer) => {
       if (checkInputCorrect(answer, card)) {
         setCard(getRandomCard());
-        setBorderColor('correctAnswer');
-        dispatch({ type: 'INCREMENT_SCORE' });
-        dispatch({ type: 'UPDATE_BACKGROUND' });
+        setCorrectAnswer(true);
+        dispatch({ type: "INCREMENT_SCORE" });
+        dispatch({ type: "UPDATE_BACKGROUND" });
       } else {
-        setBorderColor('incorrectAnswer');
+        setCorrectAnswer(false);
       }
-      dispatch({ type: 'INCREMENT_TRIES' });
+      dispatch({ type: "INCREMENT_TRIES" });
     },
-    [setBorderColor, setCard, dispatch, card],
+    [setCard, dispatch, card]
   );
 
   const SelectAnswer = useMemo(() => {
     if (card) {
       return generateAnswers().map((answer) => (
-        <button
-          className="AnswerBtn"
-          type="button"
-          onClick={() => sumbitAnswer(answer)}
-        >
+        <AnswerButton type="button" onClick={() => sumbitAnswer(answer)}>
           {answer}
-        </button>
+        </AnswerButton>
       ));
     }
-    return <div />
+    return <div />;
   }, [card, generateAnswers, sumbitAnswer]);
 
+  const setBorderColor = useCallback((state) => {
+    if (state === null) {
+      return "default";
+    }
+    return state ? "success" : "fail";
+  }, []);
+
   return (
-    <div className={`Card ${correct}`}>
-      <h1 className="Hiragana">
-        {selectWritingSystem(writingsystem)}
-      </h1>
-      <div className="Answer">
-        {SelectAnswer}
-      </div>
-    </div>
+    <CardContainer
+      animate={setBorderColor(correct)}
+      variants={cardVariants}
+    >
+      <h1 className="Hiragana">{selectWritingSystem(writingsystem)}</h1>
+      <div className="Answer">{SelectAnswer}</div>
+    </CardContainer>
   );
 }
 

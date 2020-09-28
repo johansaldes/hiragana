@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 /* eslint-disable arrow-parens */
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
 // Got this amazing hook from https://usehooks.com/useEventListener/ :)
 
@@ -23,7 +23,7 @@ export default function useEventListener(eventName, handler, element = window) {
       if (!isSupported) return;
 
       // Create event listener that calls handler function stored in ref
-      const eventListener = event => savedHandler.current(event);
+      const eventListener = (event) => savedHandler.current(event);
 
       // Add event listener
       element.addEventListener(eventName, eventListener);
@@ -33,6 +33,6 @@ export default function useEventListener(eventName, handler, element = window) {
         element.removeEventListener(eventName, eventListener);
       };
     },
-    [eventName, element], // Re-run if eventName or element changes
+    [eventName, element] // Re-run if eventName or element changes
   );
 }

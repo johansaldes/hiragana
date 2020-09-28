@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const initialState = {
   currentCard: {},
@@ -8,12 +8,10 @@ export const initialState = {
 export const DeckContext = React.createContext();
 
 export const deckReducer = (state, action) => {
-  console.log(action.type)
   switch (action.type) {
-    case 'SET_CURRENT_CARD':
+    case "SET_CURRENT_CARD":
       return { ...state, currentCard: action.card };
-    case 'SET_CURRENT_ANSWERS':
-      console.log({ answer: action.answer });
+    case "SET_CURRENT_ANSWERS":
       return { ...state, currentAnswers: action.answer };
     default:
       return state;
